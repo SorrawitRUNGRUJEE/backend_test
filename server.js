@@ -1,0 +1,15 @@
+require('dotenv').config()
+const express = require("express")
+const app = express()
+const notFound = require('./middlewares/path_not_found')
+const error = require('./middlewares/errMiddleware')
+const authRoute = require('./routes/auth')
+const todoRoute = require('./routes/todoRoute')
+const port  = process.env.PORT || 8000
+
+app.use(express.json())
+app.use('/user',authRoute)
+app.use('/todo',todoRoute)
+app.use(notFound)
+app.use(error)
+app.listen(port,()=>console.log('server operational on port:',port))
